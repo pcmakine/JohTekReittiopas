@@ -80,7 +80,7 @@ public class Reittiopas2 {
         System.out.println("Ei ratkaisua :<");
     }
 
-    public static void tulostaPolku(Pysakkiverkko2 bfs, Tila2 t) {
+    public static void tulostaPolku(Pysakkiverkko2 verkko, Tila2 t) {
         Stack<Tila2> pino = new Stack<Tila2>();
 
         while (t != null) {
@@ -93,8 +93,16 @@ public class Reittiopas2 {
         int i = 0;
 
         while (!pino.isEmpty()) {
-            Pysakki p = bfs.getPysakki(pino.pop().getPysakki());
-            System.out.println(i + ": " + p.getKoodi() + " " + p.getNimi());
+            Tila2 tila = pino.pop();
+            String linjanKoodi = tila.getLinja();
+            String linjanNimi;
+            if (linjanKoodi == null) {
+                linjanNimi = "null";
+            }else{
+                linjanNimi = verkko.getLinja(linjanKoodi).getNimi();
+            }
+            Pysakki p = verkko.getPysakki(tila.getPysakki());
+            System.out.println(i + ": " + p.getKoodi() + " " + p.getNimi() + ", Ajanhetki: " + tila.getNykyinenAika() + ", Linja: " + linjanNimi);
             x[i] = p.getXKoordinaatti();
             y[i] = p.getYKoordinaatti();
             i++;
